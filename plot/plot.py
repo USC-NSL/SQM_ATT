@@ -1,5 +1,8 @@
+import matplotlib
+matplotlib.use('Agg')
 import glob, os, sys, re, math, operator
 import matplotlib.pyplot as plt
+
 from pylab import *
 
 def trans(a):
@@ -34,6 +37,7 @@ for t_ in t:
 
 print x
 print y
+x_tick = range(0, max(x)+24, 24)
 
 fig = plt.figure()
 grid()
@@ -42,11 +46,12 @@ ax.plot(x, y)
 #ax.set_ylim([0, 30])
 #ax.set_xlim([-0.5, 6.5])
 #ax.legend(["NAME", "OPT", "ARI", "PRO", "MOZ", "PJG"], fontsize=22, numpoints=1, ncol=3)
-ax.set_xlabel("Timestamp", fontsize=24)
-ax.set_ylabel(f_, fontsize=24)
-plt.tick_params(axis='both', which='major', labelsize=22)
-plt.tick_params(axis='both', which='minor', labelsize=22)
-#plt.xticks(range(len(folders)), folders)#, rotation='30')
+ax.set_xlabel("Timestamp", fontsize=20)
+ax.set_ylabel("Metric", fontsize=20)
+ax.set_title(f_, fontsize=20)
+plt.tick_params(axis='both', which='major', labelsize=18)
+plt.tick_params(axis='both', which='minor', labelsize=18)
+plt.xticks(x_tick)#, rotation='30')
 plt.tight_layout()
 #fig.savefig("filesize.eps", bbox_inches='tight')
 fig.savefig("%s.png"%(f_), bbox_inches='tight')
