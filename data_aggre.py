@@ -1,9 +1,9 @@
-import os, sys, glob, operator
+import os, sys, glob, operator, time
 import lib
 # NHPKBSC15
 
-root = "2015_02"
-schema_tag = "RNC_BA"
+root = "/q/gp04/dpi/SQM2/NE/NYCNJ/FULL/2014/12"
+schema_tag = "LTE_BA"
 
 def print_entry(s, schema_id):
 	t = s.split("|")
@@ -39,6 +39,8 @@ for d in range(start_date, end_date + 1):
 	files = glob.glob("%s/*%s*%s*.dat.gz"%(folder, schema_tags[0], schema_tags[1]))
 	print folder, len(files)
 	for f in files:
+		print "\t", f, 
+		start = time.time()
 		lib.get_unzip(f, "temp_%s"%(pid))
 		ls = open("temp_%s"%(pid)).readlines()
 		for l in ls:
@@ -49,7 +51,7 @@ for d in range(start_date, end_date + 1):
 					data[int(l_[timestamp_index])] += int(l_[data_index])
 				else:
 					data[int(l_[timestamp_index])] = int(l_[data_index])
-
+		print int(time.time()-start), "seconds"
 sorted_data = sorted(data.items(), key=operator.itemgetter(0))
 lib.printf(f_out, "Timestamp:")
 s = ""
