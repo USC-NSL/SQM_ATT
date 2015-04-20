@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 import plot_lib
 from pylab import *
 
+f_day = -1
+f_time = -1
 def trans(a):
-	f_day = -1
-	f_time = -1
+	global f_day, f_time
 	#print a
 	for i in range(len(a)):
 		t = a[i]
@@ -19,6 +20,19 @@ def trans(a):
 		a[i] = 24*(day-f_day)+(time-f_time)
 	#print a
 
+def add_zero(x, y):
+	xx = []
+	yy = []
+
+	a = min(x)
+	b = max(x)
+	for i in range(a, b+1):
+		xx.append(i)
+		if i in x:
+			yy.append(y[x.index(i)])
+		else:
+			yy.append(0)
+	return xx, yy
 
 f_ = sys.argv[1]
 f__ = f_.split(".")
@@ -49,6 +63,7 @@ for c in range(-1, 31):
 		y.append(int(t_))
 	
 	print f_temp
+	x, y = add_zero(x, y)
 	print x
 	print y
 	x_.append(x)
@@ -60,6 +75,16 @@ fig = plt.figure()
 grid()
 ax = fig.add_subplot(111)    # The big subplot
 y_max = -1
+for i in range(len(x_[0])):
+	print x_[0][i],":",
+	for j in range(len(x_)):
+		if x_[0][i] in x_[j]:
+			print y_[j][x_[j].index(x_[0][i])],"(",leg[j],")",
+		else:
+			print 0, "(", leg[j],")",
+	print ""
+
+	
 for i in range(len(x_)):
 	ax.plot(x_[i], y_[i])
 	y_max = max(y_max, max(y_[i]))
