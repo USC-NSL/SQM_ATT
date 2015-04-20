@@ -2,7 +2,7 @@ import os, sys, glob, operator, time
 import lib
 # NHPKBSC15
 
-root = "/q/gp04/dpi/SQM2/NE/NYCNJ/FULL/2014/12"
+root = "/q/gp04/dpi/SQM2/NE/NYCNJ/FULL/2014/"
 schema_tag = "LTE_BA"
 
 def print_entry(s, schema_id):
@@ -13,18 +13,20 @@ def print_entry(s, schema_id):
 	print ""
 
 pid = str(os.getpid())
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
 	lib.print_usage()
 	exit()
 
 schema_tag = sys.argv[1]
 schema_tags = schema_tag.split("_")
-start_date, end_date = lib.get_date(sys.argv[2])
-data_name = sys.argv[3]
-filter = lib.get_filter(sys.argv[4], schema_tag)
+month = sys.argv[2]
+root += month
+start_date, end_date = lib.get_date(sys.argv[3])
+data_name = sys.argv[4]
+filter = lib.get_filter(sys.argv[5], schema_tag)
 print filter
 
-f_name = sys.argv[2]+"~"+data_name+"~"+sys.argv[4]+".out"
+f_name = sys.argv[2] + "_" + sys.argv[3]+"~"+data_name+"~"+sys.argv[5]+".out"
 f_out = open(f_name, "w")
 
 timestamp_index = lib.get_index("GMT", schema_tag)
