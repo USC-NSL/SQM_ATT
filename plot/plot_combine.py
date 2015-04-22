@@ -87,6 +87,7 @@ for i in range(len(x_[0])):
 	
 for i in range(len(x_)):
 	ax.plot(x_[i], y_[i])
+	print min(x_[i]), max(x_[i])
 	y_max = max(y_max, max(y_[i]))
 ax.set_ylim([-1, y_max*1.5])
 #ax.set_xlim([-0.5, 6.5])

@@ -75,30 +75,57 @@ while l < len(data)/5:
 	x_tick = range(0, max(x)+24, 24)
 	l += 1
 
+print x_
+print y_
+y_max = -1
+x_max = -1
+for i in range(len(x_)):
+	x_max = max(x_max, max(x_[i]))
+	y_max = max(y_max, max(y_[i]))
+y_t = []
+x_t = []
+for i in range(-1, x_max+1):
+	tt = 0
+	print i
+	for t in range(len(x_)):
+		if i in x_[t]:
+			tt += y_[t][x_[t].index(i)]
+			print y_[t][x_[t].index(i)],
+	print ""
+	print tt
+	y_t.append(tt)
+	x_t.append(i)
+t_y = sum(y_t)
+
 x__ = []
 y__ = []
 leg__ = []
+#x__.append(x_t)
+#y__.append(y_t)
+leg__.append("Total (100%)")
+
 sum_ = {}
 for t in y_:
 	sum_[sum(t)] = y_.index(t)
 sorted_sum = sorted(sum_.items(), key=operator.itemgetter(0), reverse=True)
 
 for t in sorted_sum[:top]:
-	print t
 	x__.append(x_[t[1]])
 	y__.append(y_[t[1]])
-	leg__.append(leg[t[1]])
+	leg__.append(leg[t[1]]+" (" + str(sum(y_[t[1]])*10000/t_y/100.0) + "%)")
 
 x_ = x__
 y_ = y__
 leg = leg__
-
-
+	
 fig = plt.figure()
 color.cycle_cmap(len(x_), cmap='gist_rainbow')
 grid()
 ax = fig.add_subplot(111)    # The big subplot
-y_max = -1
+ax.plot(x_t, y_t, "k:")
+for i in range(len(x_)):
+	ax.plot(x_[i], y_[i])
+'''
 for i in range(len(x_[0])):
 	print x_[0][i],":",
 	for j in range(len(x_)):
@@ -107,13 +134,14 @@ for i in range(len(x_[0])):
 		else:
 			print 0, "(", leg[j],")",
 	print ""
+'''
 
+print x_t
+print y_t
 	
-for i in range(len(x_)):
-	ax.plot(x_[i], y_[i])
-	y_max = max(y_max, max(y_[i]))
-ax.set_ylim([-1, y_max*1.5])
-#ax.set_xlim([-0.5, 6.5])
+
+ax.set_ylim([-1, max(y_t)*1.5])
+ax.set_xlim([-1, x_max])
 ax.legend(leg, fontsize=10, ncol=3)
 ax.set_xlabel("Timestamp", fontsize=20)
 ax.set_ylabel(f_.split("~")[1], fontsize=20)
