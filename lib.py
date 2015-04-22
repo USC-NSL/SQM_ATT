@@ -57,8 +57,9 @@ def scp_and_plot(f_name):
 	if f_name.find("CATEGORY_ID") == -1:
 		os.system("ssh xing@68.181.99.224 'cd research/SQM/plot; python plot_combine.py %s'"%(f_name))
 
-
-
+def scp_and_plot_separate(f_name):
+	os.system("scp %s xing@68.181.99.224:research/SQM/plot/"%(f_name))
+	os.system("ssh xing@68.181.99.224 'cd research/SQM/plot; python plot_separate.py %s'"%(f_name))
 
 schemas = {}
 
