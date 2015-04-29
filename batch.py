@@ -1,6 +1,6 @@
 import os
 
-enb = open("enbs.out").readlines()
+enb = open("enbs_colocate.txt").readlines()
 
 for xx in enb[1:20]:
 	print xx
