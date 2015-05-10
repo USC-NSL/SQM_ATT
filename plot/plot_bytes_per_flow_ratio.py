@@ -250,8 +250,13 @@ print x_30,y_30,leg_30
 
 fig = plt.figure()
 color.cycle_cmap(max(len(x_3), len(x_30)), cmap='gist_rainbow')
-grid()
-ax = fig.add_subplot(111)    # The big subplot
+#grid()
+#plt.title("DL_BYTES / DL_FLOW_CNT", fontsize=18)
+#plt.tick_params(axis='both', which='major', labelsize=18)
+#plt.tick_params(axis='both', which='minor', labelsize=18)
+
+ax = fig.add_subplot(121)    # The big subplot
+ax2 = fig.add_subplot(122, sharey=ax)
 
 leg = []
 ma = -1
@@ -260,26 +265,41 @@ for i in range(len(y_3)):
 	if x_3[i]*1.0/y_3[i] >  ma:
 		ma = x_3[i]*1.0/y_3[i] 
 	leg.append(leg_3[i])
+ax.legend(leg,2,fontsize=10, ncol=1)
 
+
+leg = []
 for i in range(len(y_30)):
-	ax.plot(2+len(x_3)+i, x_30[i]*1.0/y_30[i], "+", ms=15, mew=3)
+	ax2.plot(i, x_30[i]*1.0/y_30[i], "+", ms=15, mew=3)
 	if x_30[i]*1.0/y_30[i] >  ma:
 		ma = x_30[i]*1.0/y_30[i] 
 	leg.append(leg_30[i])
+ax2.legend(leg,2,fontsize=10, ncol=1)
+
 #ax.scatter(y_3, x_3, c="r")
 #ax.scatter(y_30, x_30, c="b")
 
-plot([len(x_3)+1, len(x_3)+1], [0, 1.2*ma], "-k", lw = 3)
+#plot([len(x_3)+1, len(x_3)+1], [0, 1.2*ma], "-k", lw = 3)
 
 ax.set_ylim([-1, 1.2*ma])
-ax.set_xlim([-1, len(x_3) + len(x_30)+3])
-ax.legend(leg,2,fontsize=10, ncol=2)
-ax.set_ylabel("DL_BYTES", fontsize=20)
-ax.set_xlabel("domains", fontsize=20)
-ax.set_title("DL_BYTES per DL_FLOW_CNT", fontsize=18)
-plt.tick_params(axis='both', which='major', labelsize=18)
-plt.tick_params(axis='both', which='minor', labelsize=18)
-plt.xticks([])#x_tick)#, rotation='30')
+ax.set_xlim([-1, len(x_3)+1])
+ax2.set_xlim([-1, len(x_30)+1])
+ax.set_xticks([])
+ax2.set_xticks([])
+#ax2.set_yticks([])
+setp(ax2.get_yticklabels(), visible=False)
+
+
+ax.set_ylabel("Flow Size (B)", fontsize=20)
+ax.set_xlabel("Web-Browsing Domains", fontsize=20)
+ax2.set_xlabel("Streaming Domains", fontsize=20)
+
+ax.tick_params(axis='both', which='major', labelsize=18)
+ax.tick_params(axis='both', which='minor', labelsize=18)
+ax2.tick_params(axis='both', which='major', labelsize=18)
+ax2.tick_params(axis='both', which='minor', labelsize=18)
+
+#plt.xticks([])#x_tick)#, rotation='30')
 #plt.tight_layout()
 #fig.savefig("filesize.eps", bbox_inches='tight')
 fig.savefig("bytes_per_flow_ratio.png", bbox_inches='tight')
