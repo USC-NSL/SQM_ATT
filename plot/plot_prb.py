@@ -127,7 +127,7 @@ grid()
 ax = fig.add_subplot(111)    # The big subplot
 
 trans_hour(x_t)
-ax.plot(x_t, y_t, "k:")
+ax.plot(x_t, y_t, "k")
 for i in range(len(x_)):
 	trans_hour(x_[i])
 	ax.plot(x_[i], y_[i])
@@ -148,6 +148,7 @@ print y_t
 
 ax.set_ylim([-1, max(y_t)*1.5])
 ax.set_xlim([0, x_max*1.0/60])
+x_tick = range(0, (x_max+1)/60, 24)
 ax.legend(leg, fontsize=10, ncol=3)
 ax.set_xlabel("Timestamp", fontsize=20)
 print f_
@@ -161,7 +162,7 @@ ax.set_ylabel(la, fontsize=20)
 ax.set_title(f_.split(".")[0], fontsize=18)
 plt.tick_params(axis='both', which='major', labelsize=18)
 plt.tick_params(axis='both', which='minor', labelsize=18)
-#plt.xticks(x_tick)#, rotation='30')
+plt.xticks(x_tick)#, rotation='30')
 plt.tight_layout()
 #fig.savefig("filesize.eps", bbox_inches='tight')
 fig.savefig("prb_%s.png"%(f_), bbox_inches='tight')
