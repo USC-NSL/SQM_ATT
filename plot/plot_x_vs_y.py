@@ -82,13 +82,21 @@ fig = plt.figure()
 grid()
 a = sys.argv[1]
 enb1 = a[a.find("ENODEB=")+7:a.find(",", a.find("ENODEB="))]
+enb1_cat = ""
+if a.find("SERVICE_CATEGORY_ID")!= -1:
+	enb1_cat = a[a.find("SERVICE_CATEGORY_ID=")+19:a.find(".", a.find("SERVICE_CATEGORY_ID="))]
+else:
+	enb1 = a[a.find("ENODEB=")+7:a.find(".", a.find("ENODEB="))]
 a = sys.argv[2]
 enb2 = a[a.find("ENODEB=")+7:a.find(".", a.find("ENODEB="))]
 ax = fig.add_subplot(111)    # The big subplot
 ax.scatter(aa,b, alpha=0.5)
 #ax.set_xlim([-0.5, 6.5])
 #ax.legend(leg, fontsize=20, ncol=2)
-ax.set_xlabel("Streaming Traffic of " +enb1, fontsize=20)
+if enb1_cat != "":
+	ax.set_xlabel("Streaming Traffic of " +enb1, fontsize=20)
+else:
+	ax.set_xlabel("Total Traffic of " +enb1, fontsize=20)
 ax.set_ylabel("Total Traffic of "+enb2, fontsize=20)
 ax.set_title(enb1 + " vs. " + enb2, fontsize=18)
 plt.tick_params(axis='both', which='major', labelsize=18)
@@ -96,4 +104,4 @@ plt.tick_params(axis='both', which='minor', labelsize=18)
 #plt.xticks(x_tick)#, rotation='30')
 #plt.tight_layout()
 #fig.savefig("filesize.eps", bbox_inches='tight')
-fig.savefig("x_vs_y.png", bbox_inches='tight')
+fig.savefig("vs_%s-%s_%s.png"%(enb1, enb1_cat, enb2), bbox_inches='tight')
