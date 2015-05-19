@@ -54,7 +54,7 @@ def get_bytes_per_flow(x1,y1,l1,x2,y2,l2):
 	x__ = []
 	y__ = []
 	l__ = []
-	for t in sor[:11]:
+	for t in sor:
 		i = x_.index(t)
 		x__.append(x_[i])
 		y__.append(y_[i])
@@ -89,7 +89,7 @@ while l < len(data)/5:
 
 	t = data[l*5+4].split(",")[:-1]
 	y = []
-	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)[:10]
+	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)#[:10]
 	if tt == "-1":
 		tt = "Unknown:" + str(domain_id)
 	leg_b_3.append(tt)
@@ -133,7 +133,7 @@ while l < len(data)/5:
 
 	t = data[l*5+4].split(",")[:-1]
 	y = []
-	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)[:10]
+	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)#[:10]
 	if tt == "-1":
 		tt = "Unknown:" + str(domain_id)
 	leg_b_30.append(tt)
@@ -176,7 +176,7 @@ while l < len(data)/5:
 
 	t = data[l*5+4].split(",")[:-1]
 	y = []
-	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)[:10]
+	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)#[:10]
 	if tt == "-1":
 		tt = "Unknown:" + str(domain_id)
 	leg_f_3.append(tt)
@@ -221,7 +221,7 @@ while l < len(data)/5:
 
 	t = data[l*5+4].split(",")[:-1]
 	y = []
-	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)[:10]
+	tt = plot_lib.get_legend("DOMAIN_ID", domain_id)#[:10]
 	if tt == "-1":
 		tt = "Unknown:" + str(domain_id)
 	leg_f_30.append(tt)
@@ -243,10 +243,22 @@ while l < len(data)/5:
 #print leg_b
 print leg_f_3, x_f_3
 x_3, y_3, leg_3 = get_bytes_per_flow(x_b_3, y_b_3, leg_b_3, x_f_3, y_f_3, leg_f_3)
+print "!!!!!"
 print x_3,y_3,leg_3
 x_30, y_30, leg_30 = get_bytes_per_flow(x_b_30, y_b_30, leg_b_30, x_f_30, y_f_30, leg_f_30)
 print x_30,y_30,leg_30
 
+for x in leg_3:
+	if x in leg_30:
+		i1 = leg_3.index(x)
+		if not x in leg_30:
+			continue
+		i2 = leg_30.index(x)
+		if y_3[i1] == 0 or y_30[i2] == 0:
+			continue
+		a = x_3[i1]*1.0/y_3[i1]
+		b = x_30[i2]*1.0/y_30[i2]
+		print x, ",",x_3[i1], ",",y_3[i1],",", a, ",", x_30[i2], ",", y_30[i2],",", b, ",", b/a
 
 fig = plt.figure()
 color.cycle_cmap(max(len(x_3), len(x_30)), cmap='gist_rainbow')

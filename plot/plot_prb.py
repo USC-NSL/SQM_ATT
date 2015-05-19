@@ -148,7 +148,7 @@ print y_t
 
 ax.set_ylim([-1, max(y_t)*1.5])
 ax.set_xlim([0, x_max*1.0/60])
-x_tick = range(0, (x_max+1)/60, 24)
+x_tick = range(0, max(25, (x_max+60)/60), 24)
 ax.legend(leg, fontsize=10, ncol=3)
 ax.set_xlabel("Timestamp", fontsize=20)
 print f_
