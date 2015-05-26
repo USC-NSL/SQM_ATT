@@ -42,6 +42,8 @@ def get_unzip(f, f_out):
 # if it passes the filtering, returns splited fields, otherwise it returns []
 def get_filtered(l, filter):
 	l_ = l.split("|")
+	if filter == []:
+		return l_
 	for k, v in filter.iteritems():
 		if l_[k] != v:
 			return []

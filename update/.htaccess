@@ -1,4 +1,5 @@
-AuthName "SQM Secure Area"
 AuthType Basic
-AuthUserFile ~/.htpasswd
-require valid-user
+AuthName "SQM secured area"
+AuthUserFile "/home/xing/.htpasswd"
+Require valid-user
+Allow from all

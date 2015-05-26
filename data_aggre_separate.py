@@ -23,7 +23,10 @@ month = sys.argv[2]
 root += month
 start_date, end_date = lib.get_date(sys.argv[3])
 data_name = sys.argv[4]
-filter = lib.get_filter(sys.argv[5], schema_tag)
+if sys.argv[5] == "none":
+	filter = []
+else:
+	filter = lib.get_filter(sys.argv[5], schema_tag)
 separate = lib.get_index(sys.argv[6], schema_tag)
 if separate == -1:
 	print "wrong separate name"
