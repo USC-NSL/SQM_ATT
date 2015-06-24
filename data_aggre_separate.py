@@ -3,6 +3,7 @@ import lib
 # NHPKBSC15
 
 root = "/q/gp04/dpi/SQM2/NE/NYCNJ/FULL/2014/"
+root = "/q/gp04/dpi/SQM2/SC/STHTX/FULL/2015/"
 schema_tag = "LTE_BA"
 
 def print_entry(s, schema_id):
