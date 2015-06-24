@@ -45,7 +45,10 @@ x_ = []
 y_ = []
 leg = []
 while l < len(data)/5:
-	domain_id = int(data[l*5])
+	if data[l*5].isdigit():
+		domain_id = int(data[l*5])
+	else:
+		domain_id = data[l*5]
 	t = data[l*5+2].split(",")[:-1]
 	x = []
 	for t_ in t:
@@ -65,10 +68,10 @@ while l < len(data)/5:
 	for t_ in t:
 		y.append(int(t_))
 	
-	print tt
+	#print tt
 	x, y = add_zero(x, y)
-	print x
-	print y
+	#print x
+	#print y
 	x_.append(x)
 	y_.append(y)
 

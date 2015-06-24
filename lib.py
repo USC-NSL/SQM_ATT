@@ -66,7 +66,7 @@ def scp_and_plot(f_name):
 def scp_and_plot_separate(f_name):
 	os.system("scp %s xing@68.181.99.224:research/SQM/plot/"%(f_name))
 	os.system("ssh xing@68.181.99.224 'cd research/SQM/plot; python plot_sep\
-	arate.py %s'"%(f_name))
+arate.py %s'"%(f_name))
 
 schemas = {}
 
