@@ -27,6 +27,7 @@ def add_zero(x, y):
 
 	a = min(x)
 	b = max(x)
+	print a,b
 	for i in range(a, b+1):
 		xx.append(i)
 		if i in x:
@@ -39,16 +40,16 @@ def get_neighbor_x_y(nid):
 	global neis, x_all, y_all
 	if nid in neis:
 		nn = neis[nid]
-		print "\tgetting neighbors:", nn
+		#print "\tgetting neighbors:", nn
 	else:
-		print "\tmissing neighbor:", nid
+		#print "\tmissing neighbor:", nid
 		return [], [], []
 	x_ = []
 	y_ = []
 	z_ = []
 	for n in nn:
 		if not n in x_all:
-			print "\t\tmissing neighbor %s for %s"%(n, nid)
+			#print "\t\tmissing neighbor %s for %s"%(n, nid)
 			continue
 		x_.append(x_all[n])
 		y_.append(y_all[n])
@@ -131,8 +132,8 @@ for l in data:
 		NUM[ls[2]][t] = 5*d[0] + 15*d[1] + 25*d[2] + 35*d[3] + 45*d[4] + 55*d[5] + 65*d[6] + 75*d[7] + 85*d[8] + 100*d[9]
 		DEN[ls[2]][t] = d[0] + d[1] + d[2] + d[3] + d[4] + d[5] + d[6] + d[7] + d[8] + d[9]
 #print NUM, DEN
-print NUM
-print DEN
+#print NUM
+#print DEN
 for xx in NUM:
 	x = []
 	y = []
@@ -147,8 +148,8 @@ for xx in NUM:
 	y_all[xx] = y
 	#print x, f_prb[x]
 
-print x_all
-print y_all
+#print x_all
+#print y_all
 
 
 print ""
@@ -162,7 +163,7 @@ data = open(sys.argv[1]).readlines()
 l = 0
 while l < len(data)/5:
 	domain_id = data[l*5][:-1]
-	print domain_id
+	#print domain_id
 	t = data[l*5+2].split(",")[:-1]
 	x = []
 	for t_ in t:
@@ -196,8 +197,8 @@ ax2 = plt.subplot(gs[1])    # The big subplot
 
 
 
-print aa
-print b
+#print aa
+#print b
 
 max_aa = {} 
 max_b = {}
@@ -215,20 +216,34 @@ for i in range(len(b)):
 	if b[i]>max_b[b_[i]]:
 		max_b[b_[i]] = b[i]
 
+print max_aa
 
 y = {}
 for i in range(101):
 	y[i] = []
+
+t_z = {}
+t_nz = {}
 for i in range(len(aa)):
+	if not aa_[i] in t_z:
+		t_z[aa_[i]] = 0
+		t_nz[aa_[i]] = 0
 	if aa[i] == 0:
 		x = 0
 	else:
 		x = int(aa[i]*100.0/max_aa[aa_[i]])
+		if x == 0:
+			t_z[aa_[i]] += 1
+		else:
+			t_nz[aa_[i]] += 1
 	if b[i] == 0:
 		y[x].append(0)
 	else:
 		y[x].append(b[i])
 		#y[x].append(b[i]*100.0/max_b[b_[i]])
+
+for x in t_z:
+	print t_z[x], t_nz[x]
 y_avg = []
 y_err_1 = []
 y_err_2 = []
@@ -258,7 +273,9 @@ for i in range(101):
 	t += len(y[i])
 y_p = []
 for i in range(101):
+	print len(y[i]),
 	y_p.append(len(y[i])*1.0/t)
+print ""
 ax2.plot(range(101), y_p, "x")
 ax2.set_xlim([-1,101])
 ax.tick_params(axis='both', which='major', labelsize=18)

@@ -58,7 +58,9 @@ def get_neighbor_x_y(nid):
 	return x_, y_, z_
 
 neis = {}
-data = open("neighbors.x2").readlines()
+#data = open("neighbors.x2").readlines()
+data = open("hxl_01_01.x2").readlines()
+
 for l in data:
 	s = l.split("|")
 	s[1] = s[1].upper()
