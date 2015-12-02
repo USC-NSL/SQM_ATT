@@ -27,7 +27,6 @@ def add_zero(x, y):
 
 	a = min(x)
 	b = max(x)
-	print a,b
 	for i in range(a, b+1):
 		xx.append(i)
 		if i in x:
@@ -159,6 +158,7 @@ aa = []
 b = []
 aa_ = []
 b_ = []
+tt_ = []
 data = open(sys.argv[1]).readlines()
 l = 0
 while l < len(data)/5:
@@ -188,6 +188,7 @@ while l < len(data)/5:
 			b.append(y_nei[ii][i2])
 			aa_.append(domain_id)
 			b_.append(id_nei[ii])
+			tt_.append(t)
 	l += 1
 
 fig = plt.figure()
@@ -216,7 +217,10 @@ for i in range(len(b)):
 	if b[i]>max_b[b_[i]]:
 		max_b[b_[i]] = b[i]
 
-print max_aa
+print "max", max_aa
+for x in max_aa:
+	if max_aa[x] <100:
+		print x, max_aa[x]
 
 y = {}
 for i in range(101):
@@ -224,6 +228,12 @@ for i in range(101):
 
 t_z = {}
 t_nz = {}
+m = {}
+n = {}
+n_t = 0
+ttt = 0
+ttt1 = 0
+ttt2 = 0
 for i in range(len(aa)):
 	if not aa_[i] in t_z:
 		t_z[aa_[i]] = 0
@@ -232,10 +242,32 @@ for i in range(len(aa)):
 		x = 0
 	else:
 		x = int(aa[i]*100.0/max_aa[aa_[i]])
-		if x == 0:
-			t_z[aa_[i]] += 1
+	if x == 0:
+		if not aa_[i] + str(tt_[i]) in m:	
+			m[aa_[i] + str(tt_[i])] = 0
+			ttt += len(neis[aa_[i]])
+			#ttt1 += len(neis[aa_[i]])
+			#ttt2 += 1
+
+
+	if x == 15:
+		t_z[aa_[i]] += 1
+		if not aa_[i]+str(tt_[i]) in n:
+			n_t += len(neis[aa_[i]])
+			n[aa_[i]+str(tt_[i])] = (0, len(neis[aa_[i]]))
+			ttt1 += len(neis[aa_[i]])
+			ttt2 += 1
 		else:
-			t_nz[aa_[i]] += 1
+			(a1,a2) = n[aa_[i]+str(tt_[i])]
+			n[aa_[i]+str(tt_[i])] = (a1+1, a2)
+			#ttt1 += len(neis[aa_[i]])
+			#ttt2 += 1
+	else:
+		t_nz[aa_[i]] += 1
+
+
+
+
 	if b[i] == 0:
 		y[x].append(0)
 	else:
@@ -261,11 +293,12 @@ for i in range(101):
 ax.errorbar(range(101), y_avg, yerr=[y_err_2, y_err_1], fmt='x')
 #ax.scatter(aa,b, alpha=0.5)
 ax.set_xlim([-1, 101])
+ax.set_ylim([0,45])
 #ax.legend(leg, fontsize=20, ncol=2)
 ax.set_xticks([0,20,40,60,80,100])
 ax.set_xticklabels(["", "", "", "", "", ""])
 #ax.set_xlabel("Streaming Traffic of ", fontsize=20)
-ax.set_ylabel("Overall Utilization", fontsize=20)
+ax.set_ylabel("PRB Utilization", fontsize=20)
 #ax.set_title(enb1 + " vs. " + enbdd2, fontsize=18)
 
 t = 0
@@ -288,6 +321,13 @@ ax2.tick_params(axis='both', which='minor', labelsize=18)
 #fig.savefig("filesize.eps", bbox_inches='tight')
 ax.grid()
 ax2.grid()
-ax2.set_xlabel("Streaming Utilization", fontsize=20)
+ax2.set_xlabel("Normalized Streaming Traffic", fontsize=20)
 ax2.set_ylabel("Samples", fontsize=20)
-fig.savefig("errorbar_ratio_all.png", bbox_inches='tight')
+fig.savefig("errorbar_ratio_all_.png", bbox_inches='tight')
+
+
+print len(m)
+print len(n), n_t, n_t/len(n)
+print ttt
+print n
+print ttt1, ttt2, ttt1/ttt2,ttt2/ttt1
